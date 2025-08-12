@@ -10,15 +10,15 @@ include 'db.php';
 $mensaje = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $usuario = $conn->real_escape_string($_POST['usuario']);
-    $clave = md5($_POST['clave']);
-    $rol = $_POST['rol'];
+      $usuario = trim($_POST['usuario']);
+      $rol = $_POST['rol'];
+      $claveHash = password_hash($_POST['clave'], PASSWORD_DEFAULT);
 
     $check = $conn->query("SELECT * FROM usuarios WHERE usuario = '$usuario'");
     if ($check->num_rows > 0) {
         $mensaje = "Ese usuario ya existe.";
     } else {
-        $sql = "INSERT INTO usuarios (usuario, clave, rol) VALUES ('$usuario', '$clave', '$rol')";
+        $sql = "INSERT INTO usuarios (usuario, clave, rol) VALUES ('$usuario', '$claveHash', '$rol')";
         if ($conn->query($sql)) {
             $mensaje = "Usuario creado correctamente.";
         } else {
@@ -63,3 +63,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   </form>
 </body>
 </html>
+
