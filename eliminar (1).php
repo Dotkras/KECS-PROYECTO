@@ -9,7 +9,7 @@ include 'db.php';
 
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $id = intval($_GET['id']);
-    $conn->query("DELETE FROM productos WHERE id=$id");
+    $conn->query("DELETE FROM productos");
 }
 
 header("Location: panel.php");
